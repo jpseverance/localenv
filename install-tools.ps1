@@ -1,17 +1,19 @@
 #Requires -RunAsAdministrator
 
-# Install Scoop -- https://scoop.sh/
-if (-not (Test-Path ${Env:UserProfile}\scoop\shims\scoop)) {
-    Set-ExecutionPolicy RemoteSigned -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh'))
-} else {
+# Install or update Scoop -- https://scoop.sh/
+if (Get-Command scoop -ErrorAction SilentlyContinue) {
     scoop update
+} else {
+    Set-ExecutionPolicy RemoteSigned -Scope Process -Force
+    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh'))
 }
 
-# Install Chocolatey -- https://chocolatey.org/
-if (-not (Test-Path C:\ProgramData\chocolatey\bin\choco.exe)) {
-    sudo Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-} else {
+# Install or update Chocolatey -- https://chocolatey.org/
+if (Get-Command choco -ErrorAction SilentlyContinue) {
     choco upgrade chocolatey
+} else {
+    Set-ExecutionPolicy Bypass -Scope Process -Force
+    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 }
 
 # Make `refreshenv` available right away, by defining the $env:ChocolateyInstall variable
