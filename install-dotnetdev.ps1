@@ -2,6 +2,7 @@
 
 #-- .NET dev --#
 #choco install visualstudio2017community -y
+choco install codemaid -y
 choco install dotnetcore-sdk -y
 choco install nuget.commandline -y
 choco install nugetpackageexplorer -y
